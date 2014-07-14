@@ -123,7 +123,7 @@ private
     end
 
     @sections_to_remove.each do |section|
-      section.replace!(content, nil, self)
+      section.replace!(content)
     end
   end
 
