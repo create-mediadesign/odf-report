@@ -15,6 +15,7 @@ class Report
     @images = {}
     @image_names_replacements = {}
     @sections = []
+    @sections_to_remove = []
 
     yield(self)
 
@@ -50,6 +51,10 @@ class Report
 
   def add_image(name, path)
     @images[name] = path
+  end
+
+  def remove_section(section_name)
+    @sections_to_remove << Section.new(name: section_name, remove: true)
   end
 
   def generate(dest = nil, &block)
@@ -115,6 +120,10 @@ private
   def replace_sections!(content)
     @sections.each do |section|
       section.replace!(content)
+    end
+
+    @sections_to_remove.each do |section|
+      section.replace!(content, nil, self)
     end
   end
 

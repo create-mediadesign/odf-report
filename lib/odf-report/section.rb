@@ -10,6 +10,7 @@ module ODFReport
       @collection_field = opts[:collection_field]
       @collection       = opts[:collection]
       @parent           = opts[:parent]
+      @remove           = opts[:remove] || false
 
       @fields = []
       @texts = []
@@ -56,6 +57,11 @@ module ODFReport
 
       return unless section = find_section_node(doc)
 
+      if @remove
+        section.remove
+        return
+      end
+
       template = section.dup
 
       populate!(row)
@@ -98,5 +104,3 @@ module ODFReport
   end
 
 end
-
-
