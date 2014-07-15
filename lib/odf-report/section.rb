@@ -34,7 +34,13 @@ module ODFReport
     end
 
     def add_table(table_name, collection_field, opts={}, &block)
-      opts.merge!(:name => table_name, :collection_field => collection_field, :parent => self)
+      if collection_field.is_a?(Array)
+        collection = collection_field
+        collection_field = nil
+      else
+        collection = nil
+      end
+      opts.merge!(:name => table_name, :collection_field => collection_field, :collection => collection, :parent => self)
       tab = Table.new(opts)
       @tables << tab
 
